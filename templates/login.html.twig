@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    {% if error is defined and error is not null %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if recover_password_message is defined and recover_password_message is not null %}
+        <div class="alert alert-danger">{{ recover_password_message }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            <h1>
+                You are logged in as {{ app.user.username }}
+            </h1>
+            <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+    <form action="{{ path('login_check') }}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username is defined ? last_username : '' }}"/>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password"/>
+
+        <input type="hidden" name="_target_path" value="login_route"/>
+        <input type="submit" name="login"/>
+        <input type="submit" value="Recover password" formaction="{{ path('recover_pass') }}">
+    </form>
+{% endblock %}

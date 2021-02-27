@@ -1,0 +1,18 @@
+security:
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+    encoders:
+        App\Entity\User: plaintext
+    firewalls:
+        main:
+            anonymous: true
+            lazy: true
+            provider: app_user_provider
+            form_login:
+                login_path: /
+                check_path: /login_check
+            logout:
+                path: app_logout
